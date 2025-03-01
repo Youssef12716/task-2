@@ -1,0 +1,89 @@
+{% load static %} 
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up</title>
+    <link rel="stylesheet" href="{% static 'css/registerstyle.css' %}">
+</head>
+<body>
+    <div class="messages">
+        {% for message in messages %}
+            <div class="alert {% if message.tags == 'error' %}alert-danger{% elif message.tags == 'success' %}alert-success{% endif %}">
+                <span>{{ message }}</span>
+                <button type="button" class="close-btn" onclick="this.parentElement.style.display='none';">&times;</button>
+            </div>
+        {% endfor %}
+    </div>
+
+    <div class="outer-border"> <!-- الإطار الخارجي -->
+        <div class="container">
+            <!-- Signup Section -->
+            <div class="signup-container">
+                <div class="signup-box">
+                    <h2>Sign Up</h2>
+                    <p class="login-text">Already have an account? <a href="{% url 'users:login' %}">Login</a></p>
+                    <form method="POST">
+                        {% csrf_token %}
+                        
+                        <label for="first-name">First Name:</label>
+                        <input type="text" id="name" name="first_name" required>
+            
+                        <label for="last_name">Last Name:</label>
+                        <input type="text" id="last_name" name="last_name" required>
+            
+                        <label for="email">Email:</label>
+                        <input type="email" id="email" name="email" required>
+            
+                        <label for="phone_number">Phone Number:</label>
+                        <input type="text" id="phone_number" name="phone_number">
+            
+                        <label for="birthday">Birthday:</label>
+                        <input type="date" id="birthday" name="birthday">
+            
+                        <label for="role">Role:</label>
+                        <select id="role" name="role">
+                            <option value="manager">Manager</option>
+                            <option value="employee">Employee</option>
+                        </select>
+            
+                        <label for="password">Password:</label>
+                        <input type="password" id="password" name="password" required>
+            
+                        <label for="confirm_password">Confirm Password:</label>
+                        <input type="password" id="confirm_password" name="confirm_password" required>
+            
+                        <button type="submit">Register</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Image Section -->
+            <div class="image-section">
+                <img src="{% static 'imgs/image_register/9784103.jpg' %}" alt="Sign Up Illustration">
+            </div>
+        </div>
+    </div>
+    <script>
+        // Function to hide messages after 5 seconds
+        function hideMessages() {
+            const messages = document.querySelectorAll('.alert');
+            messages.forEach(message => {
+                setTimeout(() => {
+                    message.style.opacity = '0';
+                    setTimeout(() => {
+                        message.style.display = 'none';
+                    }, 1000); // Fade out duration
+                }, 5000); // 5 seconds delay
+            });
+        }
+    
+        // Run the function when the page loads
+        window.onload = hideMessages;
+    </script>
+</body>
+</html>
+
+
